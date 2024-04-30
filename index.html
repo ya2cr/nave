@@ -1,0 +1,63 @@
+<html lang="pt-br">
+<head>
+    <title>Aeronave Diagonal</title>
+    <meta charset="UTF-8">
+    <style>
+        canvas {
+            border: 0px solid #ee0707;
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        var cor = 'green';
+        var cont = 1;
+        var myGamePiece;
+
+        function startGame() {
+            // Carregar a imagem
+            var image = new Image();
+            image.src = 'AeronaveheroiAli.png'; // Substitua pelo caminho da sua imagem
+
+            myGamePiece = new component(50, 30, image, 0, 0); // Usando a imagem
+            myGameArea.start();
+        }
+
+        var myGameArea = {
+            canvas: document.createElement("canvas"),
+            start: function () {
+                this.canvas.width = 900;
+                this.canvas.height = 900;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                this.interval = setInterval(updateGameArea, 20);
+            },
+            clear: function () {
+                this.context.clearRect(0, 0, this.canvas.height, this.canvas.width);
+            }
+        };
+
+        function component(height, width, image, x, y) { // Adicionando o parâmetro image
+            this.height = height;
+            this.width = width;
+            this.y = y;
+            this.x = x;
+            this.image = image; // Armazenando a imagem
+            this.update = function () {
+                ctx = myGameArea.context;
+
+                // Desenhando a imagem
+                ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+                this.x++;
+                this.y++;
+            };
+        }
+
+        function updateGameArea() {
+            myGameArea.clear();
+            myGamePiece.update();
+        }
+    </script>
+</head>
+<body onload="startGame();">       
+</body>
+</html>
